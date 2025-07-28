@@ -1,3 +1,9 @@
+const display = document.querySelector(".input-display")
+const numberButtons = document.querySelectorAll(".number")
+const operatorButtons = document.querySelectorAll(".operator")
+const clearButton = document.querySelector("#clear")
+const equalsButton = document.querySelector("#equals")
+
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -14,9 +20,9 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-let firstNumber;
-let secondNumber;
-let operator;
+let firstNumber = 0;
+let secondNumber = 0;
+let operator = "";
 
 function operate(num1, operator, num2) {
     switch (operator) {
@@ -30,3 +36,31 @@ function operate(num1, operator, num2) {
             return divide(num1, num2);
     }
 }
+
+numberButtons.forEach(button => button.addEventListener("click", (event) => {
+    if (isNaN(+display.textContent)) {
+        display.textContent = event.target.innerText;
+    } else {
+        display.textContent += event.target.innerText;
+    }
+}))
+
+operatorButtons.forEach(button => button.addEventListener("click", (event) => {
+    if (!isNaN(+display.textContent)) {
+        firstNumber = +display.textContent;
+        operator = event.target.innerText
+        display.textContent = "Enter second number"
+    }
+}))
+
+equalsButton.addEventListener("click", () => {
+    secondNumber = +display.textContent;
+    display.textContent = operate(firstNumber, operator, secondNumber)
+})
+
+clearButton.addEventListener("click", () => {
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = "";
+    display.textContent = "Enter first number"
+})
