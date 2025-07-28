@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+}
+
+.input-display {
+    text-align: right;
+    height: 60px;
+    align-content: center;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#equals,
+#clear {
+    width: 480px;
+}
+
+button {
+    height: 60px;
+    width: 120px;
+}
+
+#zero {
+    width: 360px;
+}
+

@@ -30,4 +30,3 @@ function operate(num1, operator, num2) {
             return divide(num1, num2);
     }
 }
-
