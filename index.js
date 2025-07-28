@@ -23,6 +23,7 @@ function divide(num1, num2) {
 let firstNumber = 0;
 let secondNumber = 0;
 let operator = "";
+let equalsStatus = false;
 
 function operate(num1, operator, num2) {
     switch (operator) {
@@ -33,11 +34,19 @@ function operate(num1, operator, num2) {
         case "*":
             return multiply(num1, num2);
         case "/":
-            return divide(num1, num2);
+            if (num2 === 0) {
+                return "Can't divide by 0"
+            } else {
+                return divide(num1, num2).toFixed(2);
+            }
     }
 }
 
 numberButtons.forEach(button => button.addEventListener("click", (event) => {
+    if (equalsStatus) {
+        display.textContent = "";
+        equalsStatus = false;
+    }
     if (isNaN(+display.textContent)) {
         display.textContent = event.target.innerText;
     } else {
@@ -46,21 +55,35 @@ numberButtons.forEach(button => button.addEventListener("click", (event) => {
 }))
 
 operatorButtons.forEach(button => button.addEventListener("click", (event) => {
-    if (!isNaN(+display.textContent)) {
+    if (operator) {
+        secondNumber = +display.textContent;
+        display.textContent = operate(firstNumber, operator, secondNumber);
         firstNumber = +display.textContent;
-        operator = event.target.innerText
-        display.textContent = "Enter second number"
+        secondNumber = 0;
+        operator = event.target.innerText;
+        equalsStatus = true;
+    } else {
+        if (!isNaN(+display.textContent)) {
+            firstNumber = +display.textContent;
+            operator = event.target.innerText
+            display.textContent = "Enter second number"
+        }
     }
 }))
 
 equalsButton.addEventListener("click", () => {
     secondNumber = +display.textContent;
-    display.textContent = operate(firstNumber, operator, secondNumber)
+    display.textContent = operate(firstNumber, operator, secondNumber);
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = "";
+    equalsStatus = true;
 })
 
 clearButton.addEventListener("click", () => {
     firstNumber = 0;
     secondNumber = 0;
     operator = "";
+    equalsStatus = false;
     display.textContent = "Enter first number"
 })
