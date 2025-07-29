@@ -24,6 +24,7 @@ let firstNumber = 0;
 let secondNumber = 0;
 let operator = "";
 let equalsStatus = false;
+let operatorStatus = false;
 
 function operate(num1, operator, num2) {
     switch (operator) {
@@ -52,21 +53,24 @@ numberButtons.forEach(button => button.addEventListener("click", (event) => {
     } else {
         display.textContent += event.target.innerText;
     }
+    operatorStatus = false;
 }))
 
 operatorButtons.forEach(button => button.addEventListener("click", (event) => {
-    if (operator) {
+    if (operator && !operatorStatus) {
         secondNumber = +display.textContent;
         display.textContent = operate(firstNumber, operator, secondNumber);
         firstNumber = +display.textContent;
         secondNumber = 0;
         operator = event.target.innerText;
         equalsStatus = true;
-    } else {
+        operatorStatus = true;
+    } else if (!operatorStatus) {
         if (!isNaN(+display.textContent)) {
             firstNumber = +display.textContent;
             operator = event.target.innerText
             display.textContent = "Enter second number"
+            operatorStatus = true;
         }
     }
 }))
